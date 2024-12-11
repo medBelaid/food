@@ -4,6 +4,8 @@ import Hero from './components/Hero'
 import HeadlineCards from './components/HeadlineCards'
 import Food from './components/Food'
 import Category from './components/Category'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 function App() {
   return (
@@ -11,7 +13,7 @@ function App() {
         <Navbar />
         <Hero />
         <HeadlineCards />
-        <Food />
+        <Provider store={store}><Food /></Provider>
         <Category />
     </div>
   );

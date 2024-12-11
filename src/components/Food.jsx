@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { data } from '../data/data.js';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, incrementByAmount } from '../counterSlice';
 
 const Food = () => {
-  //   console.log(data);
+  const { t } = useTranslation()
   const [foods, setFoods] = useState(data);
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
 
   //   Filter Type burgers/pizza/etc
   const filterType = (category) => {
@@ -26,26 +31,20 @@ const Food = () => {
   return (
     <div className='max-w-[1640px] m-auto px-4 py-12'>
       <h1 className='text-orange-600 font-bold text-4xl text-center'>
-        Top Rated Menu Items
+        {t('top-rated-menu-item')}
       </h1>
 
       {/* Filter Row */}
       <div className='flex flex-col lg:flex-row justify-between'>
         {/* Fliter Type */}
         <div>
-          <p className='font-bold text-gray-700'>Filter Type</p>
+          <p className='font-bold text-gray-700'>{t('filter-type')}</p>
           <div className='flex justfiy-between flex-wrap'>
             <button
               onClick={() => setFoods(data)}
               className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'
             >
               All
-            </button>
-            <button
-              onClick={() => filterType('burger')}
-              className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'
-            >
-              Burgers
             </button>
             <button
               onClick={() => filterType('pizza')}
@@ -65,12 +64,24 @@ const Food = () => {
             >
               Chicken
             </button>
+            <button
+              onClick={() => filterType('breakfast')}
+              className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'
+            >
+              Breakfast
+            </button>
+            <button
+              onClick={() => filterType('pasta')}
+              className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'
+            >
+              Pasta
+            </button>
           </div>
         </div>
 
         {/* Filter Price */}
         <div>
-          <p className='font-bold text-gray-700'>Filter Price</p>
+          <p className='font-bold text-gray-700'>{t('filter-price')}</p>
           <div className='flex justify-between max-w-[390px] w-full'>
             <button
               onClick={() => filterPrice('$')}
@@ -96,7 +107,14 @@ const Food = () => {
             >
               $$$$
             </button>
+            <button
+              onClick={() => dispatch(increment())}
+              className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'
+            >
+              Counter: {count}
+            </button>
           </div>
+          <button onClick={() => dispatch(incrementByAmount(5))} className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white'>Increment by 5: <b>{count}</b></button>
         </div>
       </div>
 
